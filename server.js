@@ -35,3 +35,5 @@ app.use("/search", searchRoutes);
 
 app.listen(3000);
 console.log("listen");
+
+module.exports = app;

@@ -4,9 +4,8 @@ function saveBlog(path) {
     Object.keys(req.body).forEach((key) => {
       blog[key] = req.body[key];
     });
-    blog.thumb = req.files.map((file) => file.filename);
+    blog.thumb = req.files.map((file) => file.path);
     blog.author = res.currUser;
-    blog.authorEmail = res.currUser.email;
     try {
       blog = await blog.save();
       res.status(200).json({ message: "create success" });

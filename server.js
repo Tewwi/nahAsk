@@ -8,6 +8,7 @@ const userRoutes = require("./routes/user/user");
 const tagRoutes = require("./routes/tag/tag");
 const commentRoutes = require("./routes/comment/comment");
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
 const { checkCurrUser } = require("./middleware/authMiddleware");
 require("dotenv").config();
 
@@ -19,11 +20,12 @@ mongoose.connect(
   `mongodb+srv://tewwi:${process.env.PASSWORD}@cluster0.rkqbjnv.mongodb.net/Blog?retryWrites=true&w=majority`
 );
 
-app.use("/uploads", express.static("./uploads"));
+app.use(express.static(`${__dirname}/uploads`));
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride("_method"));
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors());
 
 app.use("*", checkCurrUser);
 

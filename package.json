@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev start": "nodemon server.js",
+    "dev": "nodemon server.js",
     "start": "node server.js",
     "watch": "node-sass D:/Exp/Basic/backEnd/Blog/scss/app.scss D:/Exp/Basic/backEnd/Blog/public/css/app.css -w"
   },
@@ -14,6 +14,7 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "dompurify": "^2.3.4",
     "dotenv": "^16.0.1",
     "ejs": "^3.1.6",

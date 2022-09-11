@@ -13,7 +13,7 @@ require("dotenv").config();
 
 const app = express();
 
-const port = env.process.PORT || 3000;
+const port = process.env.PORT || 3000;
 
 mongoose.connect(
   `mongodb+srv://tewwi:${process.env.PASSWORD}@cluster0.rkqbjnv.mongodb.net/Blog?retryWrites=true&w=majority`

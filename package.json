@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "dev start": "nodemon server.js",
+    "start": "node server.js",
     "watch": "node-sass D:/Exp/Basic/backEnd/Blog/scss/app.scss D:/Exp/Basic/backEnd/Blog/public/css/app.css -w"
   },
   "keywords": [],

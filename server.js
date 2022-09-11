@@ -1,6 +1,5 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const home = require("./controller/Pagination");
 const methodOverride = require("method-override");
 const blogRoutes = require("./routes/blog/blogs");
 const searchRoutes = require("./routes/search/search");
@@ -13,6 +12,8 @@ const { checkCurrUser } = require("./middleware/authMiddleware");
 require("dotenv").config();
 
 const app = express();
+
+const port = env.process.PORT || 3000;
 
 mongoose.connect(
   `mongodb+srv://tewwi:${process.env.PASSWORD}@cluster0.rkqbjnv.mongodb.net/Blog?retryWrites=true&w=majority`
@@ -33,7 +34,7 @@ app.use("/tag", tagRoutes);
 app.use("/user", userRoutes);
 app.use("/search", searchRoutes);
 
-app.listen(3000);
+app.listen(port);
 console.log("listen");
 
 module.exports = app;

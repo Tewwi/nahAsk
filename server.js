@@ -21,7 +21,7 @@ mongoose.connect(
   `mongodb+srv://tewwi:${process.env.PASSWORD}@cluster0.rkqbjnv.mongodb.net/Blog?retryWrites=true&w=majority`
 );
 
-app.use(express.static(path.join(__dirname, `uploads`)));
+app.use("/uploads", express.static(path.join(__dirname, `uploads`)));
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride("_method"));
 app.use(express.json());

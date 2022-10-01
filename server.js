@@ -28,9 +28,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
 
+app.use(authRoutes);
+
 app.use("*", checkCurrUser);
 
-app.use(authRoutes);
 app.use("/blog", blogRoutes);
 app.use("/comment", commentRoutes);
 app.use("/tag", tagRoutes);

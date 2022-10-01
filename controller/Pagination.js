@@ -1,11 +1,12 @@
 async function pagination(req, res, models, option = {}) {
   let p = 1;
-  let n = 3;
+  let n = 10;
   if (req.query && req.query.p) {
     p = Number(req.query.p);
   }
 
   const total = await models.find().count().exec();
+  const totalCountItem = await models.estimatedDocumentCount(option);
 
   if ((p - 1) * n < total) {
     const data = await models
@@ -15,9 +16,12 @@ async function pagination(req, res, models, option = {}) {
       .limit(n)
       .exec();
 
-    res
-      .status(200)
-      .json({ data: data, message: "get data success", length: data.length });
+    res.status(200).json({
+      data: data,
+      message: "get data success",
+      length: data.length,
+      total: totalCountItem,
+    });
   } else {
     res.status(400).json({ message: "cant find" });
   }

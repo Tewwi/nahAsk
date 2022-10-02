@@ -6,7 +6,7 @@ async function pagination(req, res, models, option = {}) {
   }
 
   const total = await models.find().count().exec();
-  const totalCountItem = await models.estimatedDocumentCount(option);
+  const countTotalItem = await models.estimatedDocumentCount(option);
 
   if ((p - 1) * n < total) {
     const data = await models
@@ -20,7 +20,7 @@ async function pagination(req, res, models, option = {}) {
       data: data,
       message: "get data success",
       length: data.length,
-      total: totalCountItem,
+      total: countTotalItem,
     });
   } else {
     res.status(400).json({ message: "cant find" });

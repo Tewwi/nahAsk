@@ -4,7 +4,7 @@ const pagination = require("./Pagination");
 
 module.exports.blogController = {
   showSingleBlog: async (req, res) => {
-    const blog = await Blog.findById(req.params.id).populate("comment");
+    const blog = await Blog.findById(req.params.id).populate("comment tags");
 
     if (blog == null) {
       res.status(400).json({ message: "cant find blogs" });
@@ -12,11 +12,11 @@ module.exports.blogController = {
     res.status(200).json({ blog: blog });
   },
   showApproveBlogs: async (req, res) => {
-    pagination(req, res, Blog, { approve: true });
+    pagination(req, res, Blog, { approve: true }, "tags");
   },
   showUnapprovedBlogs: async (req, res) => {
     if (res.currUser.role === ROLE.ADMIN) {
-      pagination(req, res, Blog, { approve: false });
+      pagination(req, res, Blog, { approve: false }, "tags");
     } else {
       res.status(401).json({ message: "Unauthorized" });
     }

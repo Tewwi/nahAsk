@@ -1,4 +1,4 @@
-async function pagination(req, res, models, option = {}, populate) {
+async function pagination(req, res, models, option = {}, populate = "") {
   let p = 1;
   let n = 10;
   if (req.query && req.query.p) {
@@ -7,14 +7,16 @@ async function pagination(req, res, models, option = {}, populate) {
 
   const total = await models.find().count().exec();
 
+  console.log(populate);
+
   if ((p - 1) * n < total) {
     let data = await models
       .find(option)
+      .populate(populate)
       .sort({ createAt: "desc" })
       .skip((p - 1) * n)
       .limit(n)
-      .exec()
-      .populate(populate);
+      .exec();
 
     res.status(200).json({
       data: data,

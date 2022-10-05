@@ -16,7 +16,8 @@ const searchResult = async (req, res) => {
       .sort({ createAt: "desc" })
       .skip((p - 1) * n)
       .limit(n)
-      .exec();
+      .exec()
+      .populate("tags");
 
     res.status(200).json({ blog: blog, total: total.length });
   } else {

@@ -6,8 +6,8 @@ const searchResult = async (req, res) => {
   if (req.query && req.query.p) {
     p = Number(req.query.p);
   }
-  const query = req.params.query;
-  const total = await Blog.find({ title: { $regex: query } })
+  const { query } = req.query;
+  const total = await Blog.find({ title: { $regex: query, $options: "i" } })
     .count()
     .exec();
 

@@ -7,8 +7,6 @@ async function pagination(req, res, models, option = {}, populate = "") {
 
   const total = await models.find().count().exec();
 
-  console.log(populate);
-
   if ((p - 1) * n < total) {
     let data = await models
       .find(option)

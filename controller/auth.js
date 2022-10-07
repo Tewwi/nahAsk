@@ -14,7 +14,7 @@ module.exports.authController = {
     }
     try {
       user = await user.save();
-      res.status(200).json({ message: "create success", user: user });
+      res.status(200).json({ message: "create success" });
     } catch (error) {
       const err = hanldeError.hanldeError.auth(error);
       res.status(400).json({ message: "create fail", error: err });

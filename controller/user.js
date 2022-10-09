@@ -6,7 +6,7 @@ const pagination = require("./Pagination");
 module.exports.userController = {
   show: async (req, res) => {
     const user = await User.findById(req.params.id);
-    const blog = await Blog.find({ userId: user._id });
+    const blog = await Blog.find({ userId: user._id }).populate("tags");
     if (user) {
       const { password, ...infoUser } = user.toObject();
       res.status(200).json({ user: infoUser, blog: blog });

@@ -17,4 +17,9 @@ module.exports.userController = {
   showAll: async (req, res) => {
     pagination(req, res, User);
   },
+  getCurrentUser: (req, res) => {
+    if (res.currUser) {
+      res.status(200).json({ user: res.currUser });
+    }
+  },
 };

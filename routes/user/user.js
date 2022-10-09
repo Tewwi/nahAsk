@@ -5,5 +5,6 @@ const { requireAuth } = require("../../middleware/authMiddleware");
 
 router.get("/all", requireAuth, userController.showAll);
 router.get("/:id", userController.show);
+router.get("/currentUser", userController.getCurrentUser);
 
 module.exports = router;

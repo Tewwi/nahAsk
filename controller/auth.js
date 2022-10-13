@@ -8,7 +8,7 @@ module.exports.authController = {
     user.email = req.body.email;
     user.password = req.body.password;
     user.userName = req.body.userName;
-    user.role = req.body.role;
+    user.role = req.body.role || "member";
     if (req.file) {
       user.avatar = req.file.filename;
     }

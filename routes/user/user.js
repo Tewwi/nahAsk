@@ -5,12 +5,7 @@ const { requireAuth } = require("../../middleware/authMiddleware");
 const upload = require("../../middleware/multer");
 
 router.get("/all", requireAuth, userController.showAll);
-router.post(
-  "/edit/:id",
-  requireAuth,
-  upload.single("avatar"),
-  userController.updateUser
-);
+router.post("/edit/:id", requireAuth, userController.updateUser);
 router.get("/current_user", userController.getCurrentUser);
 router.get("/:id", userController.show);
 

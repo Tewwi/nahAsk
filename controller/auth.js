@@ -9,7 +9,7 @@ module.exports.authController = {
     user.password = req.body.password;
     user.userName = req.body.userName;
     user.role = req.body.role || "member";
-    user.avatar = req.avatar;
+    user.avatar = req.body.avatar;
     try {
       user = await user.save();
       res.status(200).json({ message: "create success" });

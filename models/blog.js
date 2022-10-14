@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { authorType } = require("../utli");
+const { authorType, imgType } = require("../utli");
 
 const blogSchema = new mongoose.Schema({
   title: {
@@ -11,10 +11,7 @@ const blogSchema = new mongoose.Schema({
     required: true,
   },
   thumb: {
-    type: [String],
-  },
-  thumbPublicIDs: {
-    type: [String],
+    type: [imgType],
   },
   author: {
     type: authorType,

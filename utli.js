@@ -6,4 +6,9 @@ const authorType = {
   role: String,
 };
 
-module.exports = { authorType };
+const imgType = {
+  url: String,
+  publicID: String,
+};
+
+module.exports = { authorType, imgType };

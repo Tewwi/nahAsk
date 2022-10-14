@@ -13,6 +13,9 @@ const blogSchema = new mongoose.Schema({
   thumb: {
     type: [String],
   },
+  thumbPublicIDs: {
+    type: [String],
+  },
   author: {
     type: authorType,
   },

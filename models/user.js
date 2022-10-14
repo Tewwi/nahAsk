@@ -19,6 +19,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "avatar.jpg",
   },
+  avatarPublicID: {
+    type: String,
+  },
   userName: {
     type: String,
     required: true,

@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
     type: imgType,
     default: {
       url: "https://res.cloudinary.com/dqlcjscsz/image/upload/v1665657617/avatar_aho9f1.jpg",
-      publicID: "0",
+      publicID: "avatar_aho9f1",
     },
   },
 

@@ -15,7 +15,13 @@ module.exports.tagController = {
     }
   },
   showAll: async (req, res) => {
-    pagination(req, res, Tags);
+    const { query } = req.query;
+    let option = {};
+    if (query) {
+      option.name = { $regex: query, $options: "i" };
+    }
+
+    pagination(req, res, Tags, option);
   },
   delete: async (req, res) => {
     if (res.currUser.role === ROLE.ADMIN) {

@@ -1,14 +1,14 @@
-const authorType = {
-  userId: String,
-  email: String,
-  avatar: String,
-  userName: String,
-  role: String,
-};
-
 const imgType = {
   url: String,
   publicID: String,
+};
+
+const authorType = {
+  userId: String,
+  email: String,
+  avatar: imgType,
+  userName: String,
+  role: String,
 };
 
 module.exports = { authorType, imgType };

@@ -4,7 +4,7 @@ function saveBlog(path) {
     Object.keys(req.body).forEach((key) => {
       blog[key] = req.body[key];
     });
-    blog.thumb = req.thumb;
+    blog.thumb = req.body.thumb;
     blog.author = res.currUser;
     try {
       blog = await blog.save();

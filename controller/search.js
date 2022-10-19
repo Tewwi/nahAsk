@@ -6,20 +6,17 @@ const searchResult = async (req, res) => {
   if (req.query && req.query.p) {
     p = Number(req.query.p);
   }
-  const { query } = req.query;
-  const total = await Blog.find({ title: { $regex: query, $options: "i" } })
-    .count()
-    .exec();
+  const { query, tag } = req.query;
+  const isAdmin = res.currUser && res.currUser.role === ROLE.ADMIN;
 
-  const mongodbQuery =
-    res.currUser && res.currUser.role === ROLE.ADMIN
-      ? {
-          title: { $regex: query, $options: "i" },
-        }
-      : {
-          title: { $regex: query, $options: "i" },
-          approve: true,
-        };
+  const searchBy = {
+    title: { $regex: query || "", $options: "i" },
+    tags: tag ? { $all: tag } : { $exists: true },
+  };
+
+  const mongodbQuery = isAdmin ? searchBy : { ...searchBy, approve: true };
+
+  const total = await Blog.find(mongodbQuery).count().exec();
 
   if ((p - 1) * n < total) {
     const blog = await Blog.find(mongodbQuery)

@@ -23,6 +23,14 @@ module.exports.tagController = {
 
     pagination(req, res, Tags, option);
   },
+  getSingleItem: async (req, res) => {
+    const tag = await Tags.findById(req.params.id);
+
+    if (tag == null) {
+      res.status(400).json({ message: "cant find tags" });
+    }
+    res.status(200).json({ tag: tag });
+  },
   delete: async (req, res) => {
     if (res.currUser.role === ROLE.ADMIN) {
       await Tags.findByIdAndDelete(req.params.id);

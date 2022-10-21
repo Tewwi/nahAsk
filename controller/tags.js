@@ -3,6 +3,10 @@ const pagination = require("./Pagination");
 
 module.exports.tagController = {
   add: async (req, res) => {
+    if(res.currUser.role !== ROLE.ADMIN) {
+      res.status(401).json({ message: "Unauthorized" });
+    }
+
     let newTag = new Tags();
     newTag.name = req.body.name;
     newTag.description = req.body.description;

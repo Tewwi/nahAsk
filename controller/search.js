@@ -25,7 +25,8 @@ const searchResult = async (req, res) => {
       .limit(n)
       .populate("tags")
       .exec();
-    res.status(200).json({ blog: blog, total: total.length });
+
+    res.status(200).json({ blog: blog, total: total });
   } else {
     res.status(400).json({ message: "cant find" });
   }

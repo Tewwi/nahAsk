@@ -16,7 +16,7 @@ router.post("/search", blogController.findByTags);
 
 router.post("/", requireAuth, blogController.add, saveBlog());
 
-router.put("edit/:id", requireAuth, blogController.update, saveBlog());
+router.put("/edit/:id", requireAuth, blogController.update, saveBlog());
 
 router.delete("/:id", requireAuth, blogController.delete);
 

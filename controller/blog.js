@@ -1,10 +1,13 @@
 const Blog = require("../models/blog");
 const { ROLE } = require("../role");
 const pagination = require("./Pagination");
+var mongoose = require("mongoose");
 
 module.exports.blogController = {
   showSingleBlog: async (req, res) => {
-    const blog = await Blog.findById(req.params.id).populate("comment tags");
+    const blog = await Blog.findById(req.params.id).populate(
+      "comment tags answer"
+    );
 
     if (blog == null) {
       res.status(400).json({ message: "cant find blogs" });
@@ -30,6 +33,26 @@ module.exports.blogController = {
         res.status(200).json({ message: "success", blog: blog });
       } catch (e) {
         res.status(402).json({ message: "save fail", error: e });
+      }
+    } else {
+      res.status(401).json({ message: "Unauthorized" });
+    }
+  },
+  chooseAnswer: async (req, res) => {
+    let blog = await Blog.findById(req.body.blogID);
+
+    if (
+      blog.author._id === res.currUser._id ||
+      res.currUser.role === ROLE.ADMIN
+    ) {
+      blog.answer = req.body.answer;
+
+      try {
+        blog = await blog.save();
+        res.status(200).json({ message: "create success", blog: blog });
+      } catch (e) {
+        res.status(402).json({ message: "create fail", error: e });
+        console.log(e);
       }
     } else {
       res.status(401).json({ message: "Unauthorized" });

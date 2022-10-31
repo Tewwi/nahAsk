@@ -19,6 +19,9 @@ const blogSchema = new mongoose.Schema({
   tags: {
     type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tags" }],
   },
+  answer: {
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
+  },
   comment: {
     type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
   },

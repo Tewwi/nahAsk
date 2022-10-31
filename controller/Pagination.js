@@ -20,7 +20,7 @@ async function pagination(req, res, models, option = {}, populate = "") {
       data: data,
       message: "get data success",
       length: data.length,
-      total: total.length,
+      total: total,
     });
   } else {
     res.status(400).json({ message: "cant find" });

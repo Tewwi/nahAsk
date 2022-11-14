@@ -53,5 +53,22 @@ userSchema.statics.login = async function (email, password) {
   throw Error("Incorrect email");
 };
 
+userSchema.statics.changePassword = async function (email, password, newPassword) {
+  const user = await this.findOne({ email });
+
+  if (user) {
+    const check = await bcrypt.compare(password, user.password);
+
+    if (check) {
+      user.password = newPassword;
+      const newUserInfo = await user.save()
+      const { password, ...newObject } = newUserInfo.toObject();
+      return newObject;
+    }
+    throw Error("Incorrect password");
+  }
+  throw Error("Incorrect email");
+};
+
 const User = mongoose.model("User", userSchema);
 module.exports = { userSchema, User };

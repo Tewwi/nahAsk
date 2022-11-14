@@ -35,6 +35,26 @@ module.exports.authController = {
       res.status(400).json({ message: "login fail", error: err });
     }
   },
+  change_password: async (req, res) => {
+    const { email, password, newPassword, _id } = req.body;
+
+    if(!res.currUser || res.currUser._id.toString() !== _id) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    try {
+      const user = await User.changePassword(email, password, newPassword);
+
+      res.status(200).json({
+        message: "change password success",
+        userInfo: user,
+      });
+    } catch (error) {
+      console.log(error);
+      const err = hanldeError.hanldeError.auth(error);
+      res.status(400).json({ message: "login fail", error: err });
+    }
+  },
   logout: (req, res) => {
     res.currUser = null;
     res.status(200).json({ message: "logout success" });

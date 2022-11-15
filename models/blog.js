@@ -14,7 +14,7 @@ const blogSchema = new mongoose.Schema({
     type: [imgType],
   },
   author: {
-    type: authorType,
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   },
   tags: {
     type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tags" }],

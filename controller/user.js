@@ -6,9 +6,11 @@ const pagination = require("./Pagination");
 module.exports.userController = {
   show: async (req, res) => {
     const user = await User.findById(req.params.id);
-    const blog = await Blog.find({ "author._id": user._id }).populate(
-      "tags"
-    );
+    const isAdmin = res.currUser && res.currUser.role === ROLE.ADMIN;
+    const searchBy = { "author._id": user._id };
+    const mongodbQuery = isAdmin ? searchBy : { ...searchBy, approve: true };
+
+    const blog = await Blog.find(mongodbQuery).populate("tags");
 
     if (user) {
       const { password, ...infoUser } = user.toObject();

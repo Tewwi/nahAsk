@@ -6,7 +6,9 @@ const pagination = require("./Pagination");
 module.exports.userController = {
   show: async (req, res) => {
     const user = await User.findById(req.params.id);
-    const isAdmin = res.currUser && res.currUser.role === ROLE.ADMIN;
+    const isAdmin =
+      (res.currUser && res.currUser.role === ROLE.ADMIN) ||
+      res.currUser.id === user.id;
     const searchBy = { "author._id": user._id };
     const mongodbQuery = isAdmin ? searchBy : { ...searchBy, approve: true };
 

@@ -2,6 +2,7 @@ const Blog = require("../models/blog");
 const { User } = require("../models/user");
 const { ROLE } = require("../role");
 const pagination = require("./Pagination");
+var ObjectId = require("mongoose").Types.ObjectId;
 
 module.exports.userController = {
   show: async (req, res) => {
@@ -37,6 +38,8 @@ module.exports.userController = {
 
     if (res.currUser.role === ROLE.ADMIN) {
       user.role = body.role;
+    } else {
+      user.role = ROLE.MEMBER;
     }
 
     try {
@@ -52,12 +55,16 @@ module.exports.userController = {
     }
   },
   setRole: async (req, res) => {
-    const user = await User.findById(req.params.id);
+    let user = await User.findById(new ObjectId(req.params.id));
 
     if (res.currUser.role === ROLE.ADMIN) {
-      user.role = ROLE.MEMBER;
+      if (user.role === ROLE.ADMIN) {
+        user.role = ROLE.MEMBER;
+      } else {
+        user.role = ROLE.ADMIN;
+      }
     } else {
-      user.role = ROLE.ADMIN;
+      return res.status(401).json({ message: "Unauthorized" });
     }
 
     try {

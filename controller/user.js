@@ -39,9 +39,8 @@ module.exports.userController = {
     }
 
     try {
-      newUser = await user.save();
-      console.log("new", newUser);
-      res.status(200).json({ message: "create success" });
+      const newUser = await user.save();
+      res.status(200).json({ message: "create success", data: newUser });
     } catch (e) {
       res.status(402).json({ message: "create fail", error: e });
     }
@@ -49,6 +48,22 @@ module.exports.userController = {
   getCurrentUser: (req, res) => {
     if (res.currUser) {
       res.status(200).json({ user: res.currUser });
+    }
+  },
+  setRole: async (req, res) => {
+    const user = await User.findById(req.params.id);
+
+    if (res.currUser.role === ROLE.ADMIN) {
+      user.role = ROLE.MEMBER;
+    } else {
+      user.role = ROLE.ADMIN;
+    }
+
+    try {
+      const newUser = await user.save();
+      res.status(200).json({ message: "action success", data: newUser });
+    } catch (e) {
+      res.status(402).json({ message: "action fail", error: e });
     }
   },
 };

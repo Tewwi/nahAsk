@@ -8,7 +8,8 @@ module.exports.userController = {
     const user = await User.findById(req.params.id);
     const isAdmin =
       (res.currUser && res.currUser.role === ROLE.ADMIN) ||
-      res.currUser.id === user.id;
+      res.currUser?._id === user?._id ||
+      false;
     const searchBy = { "author._id": user._id };
     const mongodbQuery = isAdmin ? searchBy : { ...searchBy, approve: true };
 

@@ -37,7 +37,6 @@ module.exports.authController = {
   },
   change_password: async (req, res) => {
     const { email, password, newPassword, _id } = req.body;
-
     if(!res.currUser || res.currUser._id.toString() !== _id) {
       return res.status(401).json({ message: "Unauthorized" });
     }

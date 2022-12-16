@@ -59,6 +59,10 @@ module.exports.blogController = {
     }
   },
   add: async (req, res, next) => {
+    if (res.currUser.isBlock) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    
     req.blog = new Blog();
     next();
   },

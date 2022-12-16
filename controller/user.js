@@ -54,21 +54,48 @@ module.exports.userController = {
       res.status(200).json({ user: res.currUser });
     }
   },
+  blockUser: async (req, res) => {
+    if (res.currUser && res.currUser.role === ROLE.ADMIN) {
+      const user = await User.findById(req.params.id);
+      if (user && user.role !== ROLE.ADMIN) {
+        try {
+          const result = await User.updateOne(
+            { _id: req.params.id },
+            { isBlock: true }
+          );
+          return res
+            .status(200)
+            .json({ message: "Block success", user: result });
+        } catch (error) {
+          console.log(error);
+          return res.status(404).json({ message: error });
+        }
+      } else {
+        return res.status(404).json({ message: "Cant find user" });
+      }
+    } else {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+  },
   setRole: async (req, res) => {
     let user = await User.findById(new ObjectId(req.params.id));
 
     if (res.currUser.role === ROLE.ADMIN) {
+      let newRole
       if (user.role === ROLE.ADMIN) {
-        user.role = ROLE.MEMBER;
+        newRole = ROLE.MEMBER;
       } else {
-        user.role = ROLE.ADMIN;
+        newRole = ROLE.ADMIN;
       }
     } else {
       return res.status(401).json({ message: "Unauthorized" });
     }
 
     try {
-      const newUser = await user.save();
+      const newUser = await User.updateOne(
+        { _id: req.params.id },
+        { role: newRole }
+      );
       res.status(200).json({ message: "action success", data: newUser });
     } catch (e) {
       res.status(402).json({ message: "action fail", error: e });

@@ -12,6 +12,10 @@ const commentSchema = new mongoose.Schema({
   blogID: {
     type: String,
   },
+  isHidden: {
+    type: Boolean,
+    default: false,
+  },
   createAt: {
     type: Date,
     default: Date.now(),

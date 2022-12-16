@@ -1,8 +1,13 @@
 const Blog = require("../models/blog");
 const { Comment } = require("../models/comment");
+const { ROLE } = require("../role");
 
 module.exports.commentController = {
   add: async (req, res) => {
+    if (res.currUser.isBlock) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
     let comment = new Comment();
     let blog = await Blog.findById(req.body.blogID);
     if (!blog) {
@@ -37,8 +42,23 @@ module.exports.commentController = {
   },
   delete: async (req, res) => {
     if (res.currUser.role === ROLE.ADMIN) {
-      await Tags.findByIdAndDelete(req.params.id);
+      await Comment.findByIdAndDelete(req.params.id);
       res.status(200).json({ message: "delete success" });
+    } else {
+      res.status(401).json({ message: "Unauthorized" });
+    }
+  },
+  hiddenComment: async (req, res) => {
+    if (res.currUser.role === ROLE.ADMIN) {
+      const comment = await Comment.findById(req.params.id);
+      comment.isHidden = true;
+
+      try {
+        const newData = await comment.save();
+        res.status(200).json({ message: "Hidden success", comment: newData });
+      } catch (error) {
+        res.status(402).json({ message: "Hidden fail" });
+      }
     } else {
       res.status(401).json({ message: "Unauthorized" });
     }

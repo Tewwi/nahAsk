@@ -15,7 +15,7 @@ module.exports.blogController = {
     res.status(200).json({ blog: blog });
   },
   showApproveBlogs: async (req, res) => {
-    pagination(req, res, Blog, { approve: true }, "tags");
+    pagination(req, res, Blog, { approve: true }, "comment tags");
   },
   showUnapprovedBlogs: async (req, res) => {
     if (res.currUser.role === ROLE.ADMIN) {

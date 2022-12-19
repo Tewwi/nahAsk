@@ -51,7 +51,7 @@ module.exports.commentController = {
   hiddenComment: async (req, res) => {
     if (res.currUser.role === ROLE.ADMIN) {
       const comment = await Comment.findById(req.params.id);
-      comment.isHidden = true;
+      comment.isHidden = !comment.isHidden;
 
       try {
         const newData = await comment.save();

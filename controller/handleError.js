@@ -3,21 +3,20 @@ module.exports.hanldeError = {
     let errors = { email: "", password: "" };
 
     if (err.message === "Incorrect email") {
-      errors.email = "Incorrect email";
+      errors.email = "Email không chính xác";
     }
 
     if (err.message === "Incorrect password") {
-      errors.password = "Incorrect password";
+      errors.password = "Mật khẩu không chính xác";
     }
 
     if (err.code === 11000) {
-      errors.email = "That email is already registered";
+      errors.email = "Email này đã tồn tại";
       return errors;
     }
 
     if (err.message.includes("User validation failed")) {
       Object.values(err.errors).forEach(({ properties }) => {
-        //console.log(properties);
         errors[properties.path] = properties.message;
       });
     }

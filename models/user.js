@@ -52,9 +52,9 @@ userSchema.statics.login = async function (email, password) {
       const { password, ...newObject } = user.toObject();
       return newObject;
     }
-    throw Error("Incorrect password");
+    throw Error("Mật khẩu không chính xác");
   }
-  throw Error("Incorrect email");
+  throw Error("Email không tồn tại");
 };
 
 userSchema.statics.changePassword = async function (email, password, newPassword) {
@@ -69,9 +69,9 @@ userSchema.statics.changePassword = async function (email, password, newPassword
       const { password, ...newObject } = newUserInfo.toObject();
       return newObject;
     }
-    throw Error("Incorrect password");
+    throw Error("Mật khẩu không chính xác");
   }
-  throw Error("Incorrect email");
+  throw Error("Email không tồn tại");
 };
 
 const User = mongoose.model("User", userSchema);

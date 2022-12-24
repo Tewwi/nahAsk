@@ -7,12 +7,15 @@ var ObjectId = require("mongoose").Types.ObjectId;
 module.exports.userController = {
   show: async (req, res) => {
     const user = await User.findById(req.params.id);
-    const isAdmin =
+    const isShowUnapprovedBLog =
       (res.currUser && res.currUser.role === ROLE.ADMIN) ||
-      res.currUser?._id === user?._id ||
+      res.currUser?._id.toString() === user?._id.toString() ||
       false;
+
     const searchBy = { "author._id": user._id };
-    const mongodbQuery = isAdmin ? searchBy : { ...searchBy, approve: true };
+    const mongodbQuery = isShowUnapprovedBLog
+      ? searchBy
+      : { ...searchBy, approve: true };
 
     const blog = await Blog.find(mongodbQuery).populate("tags");
 
@@ -81,7 +84,7 @@ module.exports.userController = {
     let user = await User.findById(new ObjectId(req.params.id));
 
     if (res.currUser.role === ROLE.ADMIN) {
-      let newRole
+      let newRole;
       if (user.role === ROLE.ADMIN) {
         newRole = ROLE.MEMBER;
       } else {
